@@ -1,0 +1,109 @@
+﻿@using Cars.Infrastructure.ViewModels
+@model Cars.Infrastructure.ViewModels.GarageViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/Style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div class="card">
+        <!-- Header -->
+        <div class="card-header">
+            <h4 class="card-header-title" id="carTitle">Update Garage</h4>
+        </div>
+        <input type="hidden" id="Id">
+
+        <!-- End Header -->
+        <!-- Body -->
+        <div class="modal-body">
+            <form method="post" asp-action="Update" asp-controller="Garage">
+                <input type="hidden" asp-for="Id" name="Id">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <!-- Form Group -->
+                        <div class="form-group">
+                            <label for="SKULabel" class="input-label">Garage Name</label>
+                            <input type="text" class="form-control" asp-for="Name" name="Name" id="SKULabel" placeholder="Name" aria-label="eg. 348121032">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <!-- End Form Group -->
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="weightLabel" class="input-label">Capacity of cars</label>
+                            <input type="number" class="form-control" asp-for="CapacityOfCars " name="CapacityOfCars " id="SKULabel" placeholder="Capacity of cars " aria-label="eg. 348121032">
+                            <span asp-validation-for="CapacityOfCars " class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <!-- Form Group -->
+                        <div class="form-group">
+                            <label for="SKULabel" class="input-label">Country</label>
+                            <input type="text" class="form-control" asp-for="Country" name="Country" id="SKULabel" placeholder="Country" aria-label="eg. 348121032">
+                            <span asp-validation-for="Country" class="text-danger"></span>
+                        </div>
+                        <!-- End Form Group -->
+                    </div>
+
+                    <div class="col-sm-6">
+                        <!-- Form Group -->
+                        <div class="form-group">
+                            <label for="SKULabel" class="input-label">City</label>
+                            <input type="text" class="form-control" asp-for="City" name="City" id="SKULabel" placeholder="City" aria-label="eg. 348121032">
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                        <!-- End Form Group -->
+                    </div>
+                    <div class="col-sm-6">
+                        <!-- Form Group -->
+                        <div class="form-group">
+                            <label for="SKULabel" class="input-label">Street</label>
+                            <input type="text" class="form-control" asp-for="Street" name="Street" id="SKULabel" placeholder="Street" aria-label="eg. 348121032">
+                            <span asp-validation-for="Street" class="text-danger"></span>
+                        </div>
+                        <!-- End Form Group -->
+                    </div>
+
+                    <div class="col-sm-6">
+                        <!-- Form Group -->
+                        <div class="form-group">
+                            <label for="SKULabel" class="input-label">Price per day</label>
+                            <input type="number" class="form-control" asp-for="PricePerDay" name="PricePerDay" id="SKULabel" placeholder="PricePerDay" aria-label="eg. 348121032">
+                            <span asp-validation-for="PricePerDay" class="text-danger"></span>
+                        </div>
+                        <!-- End Form Group -->
+                    </div>
+
+                    <div class="col-sm-6">
+                        <!-- Form Group -->
+                        <div class="form-group">
+                            <label for="SKULabel" class="input-label">Cars Using </label>
+                            <input type="number" class="form-control" asp-for="CarsUsing" name="CarsUsing" id="SKULabel" placeholder="CarsUsing" aria-label="eg. 348121032">
+                            <span asp-validation-for="CarsUsing" class="text-danger"></span>
+                        </div>
+                        <!-- End Form Group -->
+                    </div>
+
+                    <div class="col-sm-12 mt-5" style="text-align: end; padding-top: 40px">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</body>
+</html>

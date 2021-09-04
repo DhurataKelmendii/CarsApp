@@ -1,0 +1,39 @@
+﻿@model Cars.Infrastructure.ViewModels.CarGarageViewModel
+@using Cars.Infrastructure.ViewModels
+
+<h4>List of Cars and Garage</h4>
+
+<form asp-action="AddCarToGarageFromUser" asp-controller="User" method="post">
+    <div class="row">
+        @foreach (var car in Model.CarList)
+        {
+
+            <p>@car.Name</p>
+
+
+
+            <input type="number" asp-for="CarId" name="CarId" value="@car.Id" />
+            <input type="submit" class="btn btn-primary" />
+
+
+            <select asp-for="GarageId" name="GarageId" id="GarageId">
+                <option value="0">Choose a Garage</option>
+
+                @foreach (var item in Model.GarageList)
+                {
+                    <option name="GarageId" value="@item.Id">@item.Name</option>
+
+                }
+            </select>
+        }
+        @*<select asp-for="GarageId" name="GarageId" id="GarageId">
+            <option value="0">Choose a Garage</option>
+
+            @foreach (var item in Model.GarageList)
+            {
+                <option name="GarageId" value="@item.Id">@item.Name</option>
+
+            }
+        </select>*@
+    </div>
+</form>

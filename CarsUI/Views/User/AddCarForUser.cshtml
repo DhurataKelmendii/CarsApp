@@ -1,0 +1,26 @@
+﻿@model Cars.Infrastructure.ViewModels.UserCarViewModel
+
+<h4>List of Cars User</h4>
+
+    @foreach (var car in Model.CarList)
+    {
+        <form asp-action="AddCarForUser" asp-controller="User" method="post">
+            <div class="row">
+                <p>@car.Name</p>
+
+                <select asp-for="UserId" name="UserId">
+                    <option value="">Choose a User</option>
+
+                    @foreach (var item in Model.UserList)
+                    {
+                        <option name="UserId" value="@item.Id">@item.Name</option>
+
+                    }
+                </select>
+
+                <input type="number" style="display:none;" asp-for="CarId" name="CarId" value="@car.Id" />
+                <input type="submit" class="btn btn-primary" />
+            </div>
+        </form>
+    }
+
