@@ -7,6 +7,7 @@ namespace Cars.Persistence
     public interface ICarsDbContext
     {
         DbSet<User> User { get; set; }
+        DbSet<Employee> Employee { get; set; }
         DbSet<Car> Car { get; set; }
         DbSet<Garage> Garage { get; set; }
         DbSet<UserCarRel> UserCarRel { get; set; }

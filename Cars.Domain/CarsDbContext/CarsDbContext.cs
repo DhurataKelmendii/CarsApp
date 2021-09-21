@@ -13,6 +13,7 @@ namespace Cars.Persistence
         }
 
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<Car> Car { get; set; }
         public virtual DbSet<Garage> Garage { get; set; }
         public virtual DbSet<UserCarRel> UserCarRel { get; set; }
