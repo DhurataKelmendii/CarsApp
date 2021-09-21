@@ -19,8 +19,9 @@ namespace CarsUI.Controllers
         private readonly UserService userService;
         private readonly CarService carService;
         private readonly GarageService garageService;
-        //private readonly UserManager<ApplicationUser> userManager;
-
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        public readonly IPasswordHasher<ApplicationUser> _passwordHasher;
 
         public UserController(IRepository<User> _repository,
             
@@ -28,11 +29,17 @@ namespace CarsUI.Controllers
             IRepository<UserCarRel> _carUserRepository,
             CarsDbContext context,
             IRepository<Garage> garageRepository,
-            IRepository<CarGarageRel> carGarageRelRepository)
+            IRepository<CarGarageRel> carGarageRelRepository,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            IPasswordHasher<ApplicationUser> passwordHasher)
         {
             userService = new UserService(_repository, _carRepository, _carUserRepository, context, garageRepository, carGarageRelRepository);
             carService = new CarService(_carRepository);
             garageService = new GarageService(garageRepository, _carRepository, carGarageRelRepository, context);
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _passwordHasher = passwordHasher;
             //userManager = uManager;
         }
 
@@ -128,19 +135,55 @@ namespace CarsUI.Controllers
             return Ok(result);
         }
 
-        //[AllowAnonymous]
-        //[HttpPost]
-        //[Route("CreateUserApplication")]
-        //public async Task<IActionResult> CreateUserApplication([FromBody] ApplicationUser appUser)
-        //{
-        //    var guid = Guid.NewGuid();
-        //    appUser.Id = guid.ToString();
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("CreateUserApplication")]
+        public async Task<IActionResult> CreateUserApplication([FromBody] ApplicationUserViewModel appUser)
+        {
+            
+            var user = new ApplicationUser()
+            {
+                UserName = appUser.UserName,
+                Email = appUser.UserName,
+                isDeleted = appUser.isDeleted,
+                IsActive = false
+            };
 
-        //    var resul = await userManager.CreateAsync(appUser);
+            var result = await _userManager.CreateAsync(user);
+            var aspUser = await _userManager.FindByEmailAsync(appUser.UserName);
 
-        //    return Ok(true);
+            var passi = _passwordHasher.HashPassword(aspUser, appUser.PasswordHash);
+            var passwordHashed = _userManager.AddPasswordAsync(aspUser, passi);
 
-        //}
+            if (result.Succeeded)
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return BadRequest(false);
+            }
+
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login(string email, string password, bool rememberMe)
+        {
+            var user = await  _userManager.FindByEmailAsync(email);
+
+            var loginSuccessful = await _signInManager.CheckPasswordSignInAsync(user, password, true);
+
+            if (loginSuccessful.Succeeded)
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return BadRequest(false);
+            }
+        }
 
         // User Car Rel
         [HttpGet]

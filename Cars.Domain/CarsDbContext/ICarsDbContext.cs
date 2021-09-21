@@ -11,6 +11,7 @@ namespace Cars.Persistence
         DbSet<Garage> Garage { get; set; }
         DbSet<UserCarRel> UserCarRel { get; set; }
         DbSet<CarGarageRel> CarGarageRel { get; set; }
+        DbSet<ApplicationUser> ApplicationUser { get; set; }
     
     }
 }

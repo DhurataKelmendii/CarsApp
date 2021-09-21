@@ -9,6 +9,10 @@
     <Compile Remove="Migrations\20210831222217_IsDeleted.Designer.cs" />
     <Compile Remove="Migrations\20210831222614_IsDeletedAtr.cs" />
     <Compile Remove="Migrations\20210831222614_IsDeletedAtr.Designer.cs" />
+    <Compile Remove="Migrations\20210921194724_test.cs" />
+    <Compile Remove="Migrations\20210921194724_test.Designer.cs" />
+    <Compile Remove="Migrations\20210921194812_CarsUserApp.cs" />
+    <Compile Remove="Migrations\20210921194812_CarsUserApp.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
