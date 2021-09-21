@@ -10,11 +10,11 @@ namespace Cars.Persistence.CarsRepositories
 {
     public class GarageRepository
     {
+        //private readonly GarageRepository _garageRepository = new GarageRepository();
         private readonly IRepository<Garage> _garageRepository;
-        private readonly IRepository<Car> _carRepository;
         private readonly IRepository<CarGarageRel> _carGarageRepository;
+        private readonly IRepository<Car> _carRepository;
         private readonly CarsDbContext _dbContext;
-       
 
 
         public GarageRepository(IRepository<Garage> repository,
@@ -72,24 +72,6 @@ namespace Cars.Persistence.CarsRepositories
 
 
         // Cars in Garage
-        public async Task<bool> AddCarAtGarage(int carId, int garageId)
-        {
-            var carModel = await _garageRepository.GetById(carId);//get gar form db
-
-            //await _garageRepository.SaveChangesAsync();
-
-            var carGarageRel = new CarGarageRel();
-            carGarageRel.CarId = carModel.Id;
-            carGarageRel.GarageId = garageId;
-            carGarageRel.IsDeleted = false;
-
-            await _carGarageRepository.Create(carGarageRel);
-
-            var savedSuccessful = await _garageRepository.SaveChangesAsync();
-
-            return savedSuccessful;
-
-        }
 
         public List<Car> GetCarsOfGarageByGarageId(int id)
         {
@@ -175,7 +157,7 @@ namespace Cars.Persistence.CarsRepositories
                           where user.Id == userId && car.Id == carId && carUser.IsDeleted == false
                           select carUser).ToList().Count;
 
-            return result == 0 ? false : true;
+            return result == 0 ? true : false;
         }
     }
 

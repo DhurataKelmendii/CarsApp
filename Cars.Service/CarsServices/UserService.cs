@@ -18,8 +18,8 @@ namespace Cars.Service.CarsServices
 
 
         public UserService(IRepository<User> userRepository,
-            IRepository<Car> carRepository, 
-            IRepository<UserCarRel> carUserRepository, 
+            IRepository<Car> carRepository,
+            IRepository<UserCarRel> carUserRepository,
             CarsDbContext context,
             IRepository<Garage> garageRepository,
             IRepository<CarGarageRel> carGarageRelRepository
@@ -28,6 +28,53 @@ namespace Cars.Service.CarsServices
             _userRepository = new UserRepository(userRepository, carRepository, carUserRepository, context, garageRepository, carGarageRelRepository);
 
         }
+
+
+        public List<UserCarRelViewModel> GetUserCarsListByUserId()
+        {
+            var result = _userRepository.GetUserCarsListByUserId();
+
+            return result;
+        }
+
+
+        public async Task<bool> AddUserForCarFromUser(int carId, int userId)
+        {
+            var result = await _userRepository.AddUserForCarFromUser(carId, userId);
+
+            return result;
+        }
+
+        //Delete User Car//
+        public async Task<bool> DeleteCarFromUser(int carId, int userId)
+        {
+            var deleted = await _userRepository.DeleteUserCar(carId, userId);
+            return deleted;
+        }
+
+
+        //Car Garage Rel
+        public async Task<bool> AddCarToGarage(int carId, int garageId)
+        {
+            var result = await _userRepository.AddCarToGarage(carId, garageId);
+
+            return result;
+        }
+
+
+        public async Task<bool> DeleteCarGarage(int carId, int garageId)
+        {
+            var deleted = await _userRepository.DeleteCarGarage(carId, garageId);
+            return deleted;
+        }
+
+        public List<CarGarageRelViewModel> GetCarGarageRelation()
+        {
+            var result = _userRepository.GetCarGarageRelation();
+            return result;
+        }
+
+
 
         public async Task<bool> Create(User user)
         {
@@ -66,73 +113,5 @@ namespace Cars.Service.CarsServices
             return deleted;
         }
 
-
-     
-        // User Car Rel
-        public List<Car> GetUserCarByUserId(int id)
-        {
-            var result = _userRepository.GetUserCarsByUserId(id);
-
-            return result;
-        }
-          public List<UserCarRelViewModel> GetUserCarsListByUserId()
-        {
-            var result = _userRepository.GetUserCarsListByUserId();
-
-            return result;
-        }
-
-        public List<Car> GetUserCars()
-        {
-            var result = _userRepository.GetUserCars();
-
-            return result;
-        }
-
-
-        public async Task<bool> AddUserForCarFromUser(int carId, int userId)
-        {
-            var result = await _userRepository.AddUserForCarFromUser(carId, userId);
-
-            return result;
-        }
-
-        //Delete User Car//
-        public async Task<bool> DeleteCarFromUser(int carId, int userId)
-        {
-            var deleted = await _userRepository.DeleteUserCar(carId, userId);
-            return deleted;
-        }
-
-
-
-        //Car Garage Rel
-        public async Task<bool> AddCarToGarage(int carId, int garageId)
-        {
-            var result = await _userRepository.AddCarToGarage(carId, garageId);
-
-            return result;
-        }
-
-        public List<Car> GetCarFromGarageByUserId(int id)
-        {
-            var result = _userRepository.GetUserCarsByUserId(id);
-
-            return result;
-        }
-       
-
-
-        public async Task<bool> DeleteCarGarage(int carId, int garageId)
-        {
-            var deleted = await _userRepository.DeleteCarGarage(carId, garageId);
-            return deleted;
-        }
-
-        public List<CarGarageRelViewModel> GetCarGarageRelation()
-        {
-            var result =  _userRepository.GetCarGarageRelation();
-            return result;
-        }
     }
 }

@@ -189,23 +189,23 @@ namespace CarsUI.Controllers
             return RedirectToAction(nameof(NotFound), "Canot added car for User!");
         }
 
-        [HttpGet]
-        [Route("GetAllCarsForUserByUserId/{id}")]
-        public async Task<IActionResult> GetAllCarsForUserByUserId(int id)
-        {
-            var result = userService.GetUserCarByUserId(id);
-            return Ok(result);
+        //[HttpGet]
+        //[Route("GetAllCarsForUserByUserId/{id}")]
+        //public async Task<IActionResult> GetAllCarsForUserByUserId(int id)
+        //{
+        //    var result = userService.GetUserCarByUserId(id);
+        //    return Ok(result);
 
-        }
+        //}
 
-        [HttpGet]
-        [Route("GetAllCarsForUsers")]
-        public async Task<IActionResult> GetAllCarsForUsers()
-        {
-            var result = userService.GetUserCars();
-            return Ok(result);
+        //[HttpGet]
+        //[Route("GetAllCarsForUsers")]
+        //public async Task<IActionResult> GetAllCarsForUsers()
+        //{
+        //    var result = userService.GetUserCars();
+        //    return Ok(result);
 
-        }
+        //}
 
         [Route("DeleteUserCar/{carId}/{userId}")]
         public async Task<IActionResult> DeleteUserCar(int carId, int userId)

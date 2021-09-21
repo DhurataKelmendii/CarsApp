@@ -1,3 +1,4 @@
+using Cars.Domain.Entities;
 using Cars.Persistence;
 using Cars.Persistence.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +31,7 @@ namespace CarsUI
             services.AddDbContext<CarsDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("CarsDbConn")));
 
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            //services.AddTransient(typeof(IRepository<Car>), typeof(Repository<Car>));
 
             services.AddSwaggerGen();
 

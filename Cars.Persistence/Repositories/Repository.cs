@@ -46,46 +46,7 @@ namespace Cars.Persistence.Repositories
                 return result;
         }
 
-        //public async Task<bool> GetCars()GarageId
-        //{
-        //    var query = _context.Car
-        //        .Join(
-        //            _context.Garage,
-        //            car => car.Id,
-        //            garage => garage.Garage,
-        //            (customer, invoice) => new
-        //            {
-        //                InvoiceID = invoice.Id,
-        //                CustomerName = customer.FirstName + "" + customer.LastName,
-        //                InvoiceDate = invoice.Date
-        //            }
-        //        ).ToList();
-        //}
-
-        //public void  SeeCarsInGarage()
-        //{
-        //    var carsInGarageQuery =  _context.Car
-        //                             .Join( _context.Garage,
-        //                             car => car.Id,
-        //                             garage => garage.Id,
-
-        //                             (car, garage) => new
-        //                             {
-        //                                 GarageName = garage.Name,
-        //                                 carName = car.Name + "-" + car.Brand,
-        //                             }
-        //                          ).ToList();
-        //    foreach (var obj in carsInGarageQuery)
-        //    {
-        //        Console.WriteLine("{0}:", obj.GarageName.ToString());
-        //        foreach (var item in obj.carName.ToString())
-        //        {
-        //            //return obj.GarageName + " " + obj.carName;
-        //            Console.WriteLine("  {0}", item);
-        //        }
-        //    }
-
-        //}
+ 
         public void SaveChanges()
         {
             _context.SaveChanges();

@@ -85,7 +85,7 @@ namespace Cars.Persistence.CarsRepositories
             var userModel = await _userRepository.GetById(userId);
 
             var checkIfExist = garageRepository.CheckIfUserCarExists(carId, userId);
-            if (!checkIfExist)
+            if (checkIfExist)
             {
                 var userCarRel = new UserCarRel()
                 {
@@ -109,18 +109,7 @@ namespace Cars.Persistence.CarsRepositories
         }
 
 
-        public List<Car> GetUserCarsByUserId(int id)
-        {
-            var result = (from carUser in _dbContext.UserCarRel
-                          join car in _dbContext.Car
-                          on carUser.CarId equals car.Id
-                          join user in _dbContext.User
-                          on carUser.UserId equals user.Id
-                          where user.Id == id && car.IsDeleted == false
-                          select car).ToList();
-
-            return result;
-        }
+        
         public List<UserCarRelViewModel> GetUserCarsListByUserId()
         {
             var result = (from carUser in _dbContext.UserCarRel
@@ -150,18 +139,6 @@ namespace Cars.Persistence.CarsRepositories
             return result;
         }
 
-        public List<Car> GetUserCars()
-        {
-            var result = (from carUser in _dbContext.UserCarRel
-                          join car in _dbContext.Car
-                          on carUser.CarId equals car.Id
-                          join user in _dbContext.User
-                          on carUser.UserId equals user.Id
-                          where car.IsDeleted == false
-                          select car).ToList();
-
-            return result;
-        }
 
         public async Task<bool> DeleteUserCar(int carId, int userid)
         {

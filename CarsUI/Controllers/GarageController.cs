@@ -19,10 +19,10 @@ namespace CarsUI.Controllers
         private readonly GarageService garageService;
         private readonly CarService carService;
 
-        public GarageController(IRepository<Garage> _repository, IRepository<Car> _carRepository, IRepository<CarGarageRel> _carGarageRepository, CarsDbContext context )
+        public GarageController(IRepository<Garage> _repository, IRepository<Car> _carRepository, IRepository<CarGarageRel> _carGarageRepository, CarsDbContext context)
         {
             garageService = new GarageService(_repository, _carRepository, _carGarageRepository, context);
-            carService = new CarService( _carRepository);
+            carService = new CarService(_carRepository);
         }
 
 
@@ -199,85 +199,10 @@ namespace CarsUI.Controllers
 
             viewModel.Garages = resultList;
             return RedirectToAction(nameof(GaragesList), viewModel);
-            //return View(result);
-            //return Ok(result);
 
         }
 
 
-        // Cars in Garage Managing
-        [HttpGet]
-        public async Task<IActionResult> CarsGarageList()
-        {
 
-            var carListResult = (await carService.GetAll()).ToList();
-
-            var garageList = (await garageService.GetAll()).ToList();
-            //var carGarageList = (await garageService.GetAll()).ToList();
-
-            var carGarageRelModel = new CarGarageViewModel()
-            {
-                CarList = carListResult,
-                GarageList = garageList
-                //CarGarageList = carGarageList
-            };
-            return View(carGarageRelModel);
-            //var garageList = garageService.GetCarsInGarageByGarageId(garageId);
-            //return View(garageList);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> AddCarToGarage()
-        {
-            var carListResult = (await carService.GetAll()).ToList();
-
-            var garageList = (await garageService.GetAll()).ToList();
-
-            var carGarageRelModel = new CarGarageViewModel()
-            {
-                CarList = carListResult,
-                GarageList = garageList
-            };
-            return View(carGarageRelModel);
-        }
-
-        [HttpPost]
-        [Route("CreateCarInGarage/{id}")]
-        public async Task<IActionResult> CreateCarInGarage(int carId, int garageId)
-        {
-
-            var result = await garageService.AddCarInGarage(carId, garageId);
-            return Ok(result);
-        }
-
-
-        [HttpGet]
-        [Route("GetAllCarsInGarageByGarageId/{id}")]
-        public async Task<IActionResult> GetAllCarsInGarage(int id)
-        {
-            var result =  garageService.GetCarsInGarageByGarageId(id);
-            return Ok(result);
-
-        }
-
-
-        [HttpPost]
-        [Route("DeleteCarInGarage/{id}")]
-        public async Task<IActionResult> DeleteCarInGarage(int id)
-        {
-            var result = await garageService.DeleteCarsInGarage(id);
-            return Ok(result);
-        }
-
-     
-
-        [HttpGet]
-        [Route("GetAll")]
-        public async Task<IActionResult> GetAll()
-        {
-            var result = await garageService.GetAll();
-            return Ok(result);
-
-        }
     }
 }
