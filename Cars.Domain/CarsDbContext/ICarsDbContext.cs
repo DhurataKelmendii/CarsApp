@@ -16,6 +16,10 @@ namespace Cars.Persistence
         DbSet<Roles> Roles { get; set; }
         DbSet<Category> Category { get; set; }
         DbSet<Bus> Bus { get; set; }
+        DbSet<Admin> Admin { get; set; }
+        DbSet<Place> Place { get; set; }
+        DbSet<BusGarage> BusGarage { get; set; }
+
     }
 }
 
