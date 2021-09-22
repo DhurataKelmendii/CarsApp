@@ -19,8 +19,9 @@ namespace Cars.Persistence
         public virtual DbSet<UserCarRel> UserCarRel { get; set; }
         public virtual DbSet<CarGarageRel> CarGarageRel { get; set; }
         public virtual DbSet<ApplicationUser> ApplicationUser { get; set; }
-
-     
+        public virtual DbSet<Roles> Roles { get; set; }
+        public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<Bus> Bus { get; set; }
     }
 }
 
