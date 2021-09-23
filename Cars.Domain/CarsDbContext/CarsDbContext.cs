@@ -24,6 +24,7 @@ namespace Cars.Persistence
         public virtual DbSet<Admin> Admin { get; set; }
         public virtual DbSet<Place> Place { get; set; }
         public virtual DbSet<BusGarage> BusGarage { get; set; }
+        public virtual DbSet<Reservation> Reservation { get; set; }
 
     }
 }

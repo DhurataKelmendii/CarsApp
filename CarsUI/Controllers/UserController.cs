@@ -40,25 +40,8 @@ namespace CarsUI.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _passwordHasher = passwordHasher;
-            //userManager = uManager;
+  
         }
-
-        //[HttpGet]
-        //public async Task<IActionResult> Index()
-        //{
-        //    var carListResult = (await carService.GetAll()).ToList();
-
-        //    var garageList = ( await garageService.GetAll()).ToList();
-
-        //    var carGarageRelModel = new CarGarageViewModel()
-        //    {
-        //        CarList = carListResult,
-        //        GarageList = garageList
-        //    };
-        //    return View(carGarageRelModel);
-        //}
-
-      
 
         [HttpPost]
         [Route("AddNewUser")]

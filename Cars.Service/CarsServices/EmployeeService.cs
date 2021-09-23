@@ -13,8 +13,6 @@ namespace Employees.Service.CarsServices
     {
 
         private readonly EmployeeRepository _employeeRepository;
-        //private readonly IRepository<Employee> _repository;
-
 
         public EmployeeService(IRepository<Employee> repository)
         {
@@ -37,14 +35,6 @@ namespace Employees.Service.CarsServices
             return updatedSuccefully;
         }
 
-        //public async Task<bool> Delete(Employee Employee)
-        //{
-        //    _EmployeeRepository.Delete(Employee);
-
-        //    var deleted = await _repository.SaveChangesAsync();
-
-        //    return deleted;
-        //}
 
         public async Task<IList<Employee>> GetAll()
         {

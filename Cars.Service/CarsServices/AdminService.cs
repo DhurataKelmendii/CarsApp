@@ -13,8 +13,6 @@ namespace Admins.Service.CarsServices
     {
 
         private readonly AdminRepository _adminRepository;
-        //private readonly IRepository<Admin> _repository;
-
 
         public AdminService(IRepository<Admin> repository)
         {
@@ -37,14 +35,6 @@ namespace Admins.Service.CarsServices
             return updatedSuccefully;
         }
 
-        //public async Task<bool> Delete(Admin Admin)
-        //{
-        //    _AdminRepository.Delete(Admin);
-
-        //    var deleted = await _repository.SaveChangesAsync();
-
-        //    return deleted;
-        //}
 
         public async Task<IList<Admin>> GetAll()
         {

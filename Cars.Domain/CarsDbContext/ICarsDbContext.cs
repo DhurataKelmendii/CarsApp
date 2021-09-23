@@ -19,6 +19,7 @@ namespace Cars.Persistence
         DbSet<Admin> Admin { get; set; }
         DbSet<Place> Place { get; set; }
         DbSet<BusGarage> BusGarage { get; set; }
+        DbSet<Reservation> Reservation { get; set; }
 
     }
 }
