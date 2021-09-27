@@ -153,8 +153,8 @@ namespace CarsUI.Controllers
 
                     viewModel.Cars = result;
 
-                    return RedirectToAction(nameof(CarsList), viewModel);
-                    //return Ok(true);
+                    //return RedirectToAction(nameof(CarsList), viewModel);
+                    return Ok(true);
                 }
                 //return NotFound();
                 return Ok(false);
@@ -195,7 +195,7 @@ namespace CarsUI.Controllers
 
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -219,9 +219,9 @@ namespace CarsUI.Controllers
             }).ToList();
 
             viewModel.Cars = resultList;
-            return RedirectToAction(nameof(CarsList), viewModel);
+            //return RedirectToAction(nameof(CarsList), viewModel);
             //return View(result);
-            //return Ok(result);
+            return Ok(result);
 
         }
 
