@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace CarsUI.Controllers
 {
-    //[ApiController]
-    //[Route("[controller]")]
-    public class CarController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CarController : ControllerBase
     {
         private readonly IRepository<Car> _repository;
         private readonly CarService carService;
@@ -24,6 +24,7 @@ namespace CarsUI.Controllers
         }
 
         [HttpGet]
+        [Route("CarsList")]
         public async Task<IActionResult> CarsList()
         {
             var model = new CarViewModel();
@@ -43,13 +44,14 @@ namespace CarsUI.Controllers
             }).ToList();
 
             model.Cars = result;
-            return View(model);
+            return Ok(model);
+            //return View(model);
         }
 
 
         [HttpPost]
-        //[Route("Create")]
-        public async Task<IActionResult> Create(CarViewModel carViewModel)
+        [Route("Create")]
+        public async Task<IActionResult> Create([FromBody]CarViewModel carViewModel)
         {
             if (carViewModel != null)
             {
@@ -104,12 +106,13 @@ namespace CarsUI.Controllers
                 Price = carModel.Price,
                 YearOfProduction = carModel.YearOfProduction
             };
-            return View(carViewModel);
+            return Ok(carViewModel);
+            //return View(carViewModel);
         }
 
 
         [HttpPost]
-        //[Route("Update")]
+        [Route("Update")]
         public async Task<IActionResult> Update(CarViewModel carViewModel)
         {
             if (carViewModel != null)
@@ -193,7 +196,7 @@ namespace CarsUI.Controllers
         }
 
         [HttpGet]
-        //[Route("Delete/{id}")]
+        [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
 
