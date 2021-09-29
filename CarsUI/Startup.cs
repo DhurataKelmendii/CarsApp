@@ -37,9 +37,7 @@ namespace CarsUI
                 c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod()
                  .AllowAnyHeader());
             });
-            //services.AddCors();
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-            //services.AddTransient(typeof(IRepository<Car>), typeof(Repository<Car>));
 
             services.AddSwaggerGen();
 

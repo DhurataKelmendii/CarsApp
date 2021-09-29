@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 
 namespace CarsUI.Controllers
 {
-    //[ApiController]
-    //[Route("[controller]")]
+    [Route("api/[controller]")]
+    [ApiController]
     public class GarageController : Controller
     {
         private readonly GarageService garageService;
@@ -27,6 +27,7 @@ namespace CarsUI.Controllers
 
 
         [HttpGet]
+        [Route("GaragesList")]
         public async Task<IActionResult> GaragesList()
         {
             var model = new GarageViewModel();
@@ -44,12 +45,13 @@ namespace CarsUI.Controllers
             }).ToList();
 
             model.Garages = result;
-            return View(model);
+            //return View(model);
+            return Ok(model);
         }
 
         [HttpPost]
-        //[Route("Create")]
-        public async Task<IActionResult> Create(GarageViewModel garageViewModel)
+        [Route("CreateGarage")]
+        public async Task<IActionResult> CreateGarage(GarageViewModel garageViewModel)
         {
             if (garageViewModel != null)
             {
@@ -99,12 +101,13 @@ namespace CarsUI.Controllers
                 PricePerDay = garageModel.PricePerDay,
                 IsDeleted = garageModel.IsDeleted
             };
-            return View(garageViewModel);
+            //return View(garageViewModel);
+            return Ok(garageViewModel);
         }
 
         [HttpPost]
-        //[Route("Update")]
-        public async Task<IActionResult> Update(GarageViewModel garageViewModel)
+        [Route("UpdateGarage")]
+        public async Task<IActionResult> UpdateGarage(GarageViewModel garageViewModel)
         {
             if (garageViewModel != null)
             {
@@ -140,8 +143,8 @@ namespace CarsUI.Controllers
 
                     viewModel.Garages = result;
 
-                    return RedirectToAction(nameof(GaragesList), viewModel);
-                    //return Ok(true);
+                    //return RedirectToAction(nameof(GaragesList), viewModel);
+                    return Ok(true);
                 }
                 //return NotFound();
                 return Ok(false);
@@ -168,18 +171,10 @@ namespace CarsUI.Controllers
             }
         }
 
- 
+
         [HttpPost]
         [Route("DeleteGarage/{id}")]
         public async Task<IActionResult> DeleteGarage(int id)
-        {
-            var result = await garageService.DeleteGarage(id);
-            return Ok(result);
-        }
-
-        [HttpGet]
-        //[Route("Delete/{id}")]
-        public async Task<IActionResult> Delete(int id)
         {
 
             var result = await garageService.DeleteGarage(id);
@@ -198,7 +193,8 @@ namespace CarsUI.Controllers
             }).ToList();
 
             viewModel.Garages = resultList;
-            return RedirectToAction(nameof(GaragesList), viewModel);
+            //return RedirectToAction(nameof(GaragesList), viewModel);
+            return Ok(viewModel);
 
         }
 

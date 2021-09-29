@@ -15,7 +15,6 @@ namespace CarsUI.Controllers
     [ApiController]
     public class CarController : ControllerBase
     {
-        private readonly IRepository<Car> _repository;
         private readonly CarService carService;
 
         public CarController(IRepository<Car> repository)
