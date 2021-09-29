@@ -58,7 +58,7 @@ namespace CarsUI
             app.UseCors(options => options.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader());
 
             app.UseSwagger();
-            //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CarsApp v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CarsApp v1"));
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

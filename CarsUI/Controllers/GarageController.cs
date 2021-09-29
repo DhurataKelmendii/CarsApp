@@ -84,26 +84,26 @@ namespace CarsUI.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Update(int id)
-        {
-            var garageModel = await garageService.GetById(id);
+        //[HttpGet]
+        //public async Task<IActionResult> Update(int id)
+        //{
+        //    var garageModel = await garageService.GetById(id);
 
-            var garageViewModel = new GarageViewModel()
-            {
-                Id = garageModel.Id,
-                Name = garageModel.Name,
-                Country = garageModel.Country,
-                City = garageModel.City,
-                Street = garageModel.Street,
-                CapacityOfCars = garageModel.CapacityOfCars,
-                CarsUsing = garageModel.CarsUsing,
-                PricePerDay = garageModel.PricePerDay,
-                IsDeleted = garageModel.IsDeleted
-            };
-            //return View(garageViewModel);
-            return Ok(garageViewModel);
-        }
+        //    var garageViewModel = new GarageViewModel()
+        //    {
+        //        Id = garageModel.Id,
+        //        Name = garageModel.Name,
+        //        Country = garageModel.Country,
+        //        City = garageModel.City,
+        //        Street = garageModel.Street,
+        //        CapacityOfCars = garageModel.CapacityOfCars,
+        //        CarsUsing = garageModel.CarsUsing,
+        //        PricePerDay = garageModel.PricePerDay,
+        //        IsDeleted = garageModel.IsDeleted
+        //    };
+        //    //return View(garageViewModel);
+        //    return Ok(garageViewModel);
+        //}
 
         [HttpPost]
         [Route("UpdateGarage")]

@@ -86,28 +86,28 @@ namespace CarsUI.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> Update(int id)
-        {
-            var carModel = await carService.GetById(id);
+        //[HttpGet]
+        //public async Task<IActionResult> Update(int id)
+        //{
+        //    var carModel = await carService.GetById(id);
 
-            var carViewModel = new CarViewModel()
-            {
-                Id = carModel.Id,
-                Brand = carModel.Brand,
-                ChassisNumber = carModel.ChassisNumber,
-                Color = carModel.Color,
-                EngineType = carModel.EngineType,
-                FuelType = carModel.FuelType,
-                IsDeleted = carModel.IsDeleted,
-                Name = carModel.Name,
-                NumberOfSeats = carModel.NumberOfSeats,
-                Price = carModel.Price,
-                YearOfProduction = carModel.YearOfProduction
-            };
-            return Ok(carViewModel);
-            //return View(carViewModel);
-        }
+        //    var carViewModel = new CarViewModel()
+        //    {
+        //        Id = carModel.Id,
+        //        Brand = carModel.Brand,
+        //        ChassisNumber = carModel.ChassisNumber,
+        //        Color = carModel.Color,
+        //        EngineType = carModel.EngineType,
+        //        FuelType = carModel.FuelType,
+        //        IsDeleted = carModel.IsDeleted,
+        //        Name = carModel.Name,
+        //        NumberOfSeats = carModel.NumberOfSeats,
+        //        Price = carModel.Price,
+        //        YearOfProduction = carModel.YearOfProduction
+        //    };
+        //    return Ok(carViewModel);
+        //    //return View(carViewModel);
+        //}
 
 
         [HttpPost]
