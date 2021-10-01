@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace CarsUI.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase

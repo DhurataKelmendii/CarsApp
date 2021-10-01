@@ -13,7 +13,9 @@ using System.Threading.Tasks;
 
 namespace CarsUI.Controllers
 {
-    public class UserController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UserController : ControllerBase
     {
      
         private readonly UserService userService;
@@ -126,17 +128,18 @@ namespace CarsUI.Controllers
             
             var user = new ApplicationUser()
             {
-                UserName = appUser.UserName,
-                Email = appUser.UserName,
-                isDeleted = appUser.isDeleted,
-                IsActive = false
+                UserName = appUser.Email,
+                Email = appUser.Email,
+                NormalizedEmail = appUser.Email,
+                isDeleted = false,
+                IsActive = true
             };
 
-            var result = await _userManager.CreateAsync(user);
-            var aspUser = await _userManager.FindByEmailAsync(appUser.UserName);
+            var result = await _userManager.CreateAsync(user, appUser.Password);
+           // var aspUser = await _userManager.FindByEmailAsync(appUser.UserName);
 
-            var passi = _passwordHasher.HashPassword(aspUser, appUser.PasswordHash);
-            var passwordHashed = _userManager.AddPasswordAsync(aspUser, passi);
+          //  var passi = _passwordHasher.HashPassword(aspUser, appUser.PasswordHash);
+          //  var passwordHashed = _userManager.AddPasswordAsync(aspUser, passi);
 
             if (result.Succeeded)
             {
@@ -152,13 +155,14 @@ namespace CarsUI.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("Login")]
-        public async Task<IActionResult> Login(string email, string password, bool rememberMe)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel loginModel)
         {
-            var user = await  _userManager.FindByEmailAsync(email);
+            var user = await  _userManager.FindByEmailAsync(loginModel.Email);
+            
 
-            var loginSuccessful = await _signInManager.CheckPasswordSignInAsync(user, password, true);
+            var loginSuccessful = await _userManager.CheckPasswordAsync(user, loginModel.Password);
 
-            if (loginSuccessful.Succeeded)
+            if (loginSuccessful)
             {
                 return Ok(true);
             }
@@ -170,14 +174,16 @@ namespace CarsUI.Controllers
 
         // User Car Rel
         [HttpGet]
+        [Route("UserCarsList")]
         public async Task<IActionResult> UserCarsList()
         {
             var result = userService.GetUserCarsListByUserId();
-            return View(result);
+            return Ok(result);
 
         }
 
         [HttpGet]
+        [Route("AddCarForUser")]
         public async Task<IActionResult> AddCarForUser()
         {
             var carListResult = (await carService.GetAll()).ToList();
@@ -189,10 +195,11 @@ namespace CarsUI.Controllers
                 CarList = carListResult,
                 UserList = userList
             };
-            return View(carUserRelModel);
+            return Ok(carUserRelModel);
             
         }
         [HttpPost]
+        [Route("AddCarForUser/{carId,userId}")]
         public async Task<ActionResult> AddCarForUser(int carId, int userId)
         {
 
@@ -209,10 +216,11 @@ namespace CarsUI.Controllers
                     CarList = carListResult,
                     UserList = userList
                 };
-                return View(userCarRelModel);
+                return Ok(userCarRelModel);
             }
 
-            return RedirectToAction(nameof(NotFound), "Canot added car for User!");
+            //return RedirectToAction(nameof(NotFound), "Canot added car for User!");
+            return BadRequest();
         }
 
         //[HttpGet]
@@ -232,7 +240,7 @@ namespace CarsUI.Controllers
         //    return Ok(result);
 
         //}
-
+        [HttpPost]
         [Route("DeleteUserCar/{carId}/{userId}")]
         public async Task<IActionResult> DeleteUserCar(int carId, int userId)
         {
@@ -241,7 +249,8 @@ namespace CarsUI.Controllers
 
             var carList = userService.GetUserCarsListByUserId();
 
-            return RedirectToAction(nameof(UserCarsList), result);
+            //return RedirectToAction(nameof(UserCarsList), result);
+            return Ok(result);
         }
 
 
@@ -249,6 +258,7 @@ namespace CarsUI.Controllers
         // Cars To Garage
 
         [HttpGet]
+        [Route("AddCarToGarage")]
         public async Task<IActionResult> AddCarToGarage()
         {
             var carListResult = (await carService.GetAll()).ToList();
@@ -260,13 +270,13 @@ namespace CarsUI.Controllers
                 CarList = carListResult,
                 GarageList = garageList
             };
-            return View(carGarageModel);
+            return Ok(carGarageModel);
 
         }
 
 
         [HttpPost]
-        //[Route("AddCarToGarage/{carId}/{garageId}")]
+        [Route("AddCarToGarage/{carId}/{garageId}")]
         public async Task<ActionResult> AddCarToGarage(int garageId, int carId)
         {
 
@@ -283,24 +293,25 @@ namespace CarsUI.Controllers
                     CarList = carListResult,
                     GarageList = garageList
                 };
-                return View(carGarageViewModel);
+                return Ok(carGarageViewModel);
             }
-
-            return RedirectToAction(nameof(NotFound), "Canot added car to Garage!");
+            return BadRequest();
+            //return RedirectToAction(nameof(NotFound), "Canot added car to Garage!");
         }
      
       
 
         [HttpGet]
+        [Route("CarsGarageList")]
         public async Task<IActionResult> CarsGarageList()
         {
 
             var result = userService.GetCarGarageRelation();
-            return View(result);
+            return Ok(result);
 
         }
 
-
+        [HttpPost]
         [Route("DeleteCarFromGarage/{carId}/{garageId}")]
         public async Task<IActionResult> DeleteCarFromGarage(int carId, int  garageId)
         {
@@ -309,7 +320,8 @@ namespace CarsUI.Controllers
 
             var carList = userService.GetCarGarageRelation();
 
-            return RedirectToAction(nameof(CarsGarageList), result);
+            //return RedirectToAction(nameof(CarsGarageList), result);
+            return Ok(result);
         }
     }
 }

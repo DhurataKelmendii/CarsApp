@@ -8,16 +8,9 @@ namespace CarsUI.Controllers
 {
     public class HomeController : Controller
     {
-        [HttpGet]
         public IActionResult Index()
         {
-            return View(nameof(Index));
+            return View();
         }
-
-        //[HttpGet]
-        //public IActionResult CarsInGarage()
-        //{
-        //    return View();
-        //}
     }
 }
