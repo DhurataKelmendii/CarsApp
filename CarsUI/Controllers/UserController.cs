@@ -45,6 +45,55 @@ namespace CarsUI.Controllers
   
         }
 
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("CreateUserApplication")]
+        public async Task<IActionResult> CreateUserApplication([FromBody] ApplicationUserViewModel appUser)
+        {
+
+            var user = new ApplicationUser()
+            {
+                UserName = appUser.Email,
+                Email = appUser.Email,
+                NormalizedEmail = appUser.Email,
+                isDeleted = false,
+                IsActive = true
+            };
+
+            var result = await _userManager.CreateAsync(user, appUser.Password);
+
+            if (result.Succeeded)
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return BadRequest(false);
+            }
+
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginViewModel loginModel)
+        {
+            var user = await _userManager.FindByEmailAsync(loginModel.Email);
+
+
+            var loginSuccessful = await _userManager.CheckPasswordAsync(user, loginModel.Password);
+
+            if (loginSuccessful)
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return BadRequest(false);
+            }
+        }
+
+
         [HttpPost]
         [Route("AddNewUser")]
         public async Task<IActionResult> AddNewUser(User user)
@@ -120,58 +169,7 @@ namespace CarsUI.Controllers
             return Ok(result);
         }
 
-        [AllowAnonymous]
-        [HttpPost]
-        [Route("CreateUserApplication")]
-        public async Task<IActionResult> CreateUserApplication([FromBody] ApplicationUserViewModel appUser)
-        {
-            
-            var user = new ApplicationUser()
-            {
-                UserName = appUser.Email,
-                Email = appUser.Email,
-                NormalizedEmail = appUser.Email,
-                isDeleted = false,
-                IsActive = true
-            };
-
-            var result = await _userManager.CreateAsync(user, appUser.Password);
-           // var aspUser = await _userManager.FindByEmailAsync(appUser.UserName);
-
-          //  var passi = _passwordHasher.HashPassword(aspUser, appUser.PasswordHash);
-          //  var passwordHashed = _userManager.AddPasswordAsync(aspUser, passi);
-
-            if (result.Succeeded)
-            {
-                return Ok(true);
-            }
-            else
-            {
-                return BadRequest(false);
-            }
-
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        [Route("Login")]
-        public async Task<IActionResult> Login([FromBody] LoginViewModel loginModel)
-        {
-            var user = await  _userManager.FindByEmailAsync(loginModel.Email);
-            
-
-            var loginSuccessful = await _userManager.CheckPasswordAsync(user, loginModel.Password);
-
-            if (loginSuccessful)
-            {
-                return Ok(true);
-            }
-            else
-            {
-                return BadRequest(false);
-            }
-        }
-
+      
         // User Car Rel
         [HttpGet]
         [Route("UserCarsList")]

@@ -35,6 +35,10 @@ namespace CarsUI.Controllers
             {
                 Id = x.Id,
                 NamePlace = x.NamePlace,
+                Country = x.Country,
+                City = x.City,
+                Street = x.Street,
+                NumberOfGarages = x.NumberOfGarages,
                 IsDeleted = x.IsDeleted
             }).ToList();
 
@@ -45,7 +49,7 @@ namespace CarsUI.Controllers
 
         [HttpPost]
         [Route("CreatePlace")]
-        public async Task<IActionResult> Create(PlaceViewModel placeViewModel)
+        public async Task<IActionResult> CreatePlace(PlaceViewModel placeViewModel)
         {
             if (placeViewModel != null)
             {
@@ -53,8 +57,10 @@ namespace CarsUI.Controllers
                 {
                     Id = placeViewModel.Id,
                     NamePlace = placeViewModel.NamePlace,
-                    
-
+                    Country = placeViewModel.Country,
+                    City = placeViewModel.City,
+                    Street = placeViewModel.Street,
+                    NumberOfGarages = placeViewModel.NumberOfGarages,
                     IsDeleted = placeViewModel.IsDeleted,
                 };
                 var saveSuccessful = await placeService.Create(model);
@@ -74,27 +80,6 @@ namespace CarsUI.Controllers
             }
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Update(int id)
-        //{
-        //    var placeModel = await placeService.GetById(id);
-
-        //    var placeViewModel = new PlaceViewModel()
-        //    {
-        //        Id = placeModel.Id,
-        //        Name = placeModel.Name,
-        //        Country = placeModel.Country,
-        //        City = placeModel.City,
-        //        Street = placeModel.Street,
-        //        CapacityOfCars = placeModel.CapacityOfCars,
-        //        CarsUsing = placeModel.CarsUsing,
-        //        PricePerDay = placeModel.PricePerDay,
-        //        IsDeleted = placeModel.IsDeleted
-        //    };
-        //    //return View(placeViewModel);
-        //    return Ok(placeViewModel);
-        //}
-
         [HttpPost]
         [Route("UpdatePlace")]
         public async Task<IActionResult> Update(PlaceViewModel placeViewModel)
@@ -105,7 +90,10 @@ namespace CarsUI.Controllers
                 {
                     Id = placeViewModel.Id,
                     NamePlace = placeViewModel.NamePlace,
-                    
+                    Country = placeViewModel.Country,
+                    City = placeViewModel.City,
+                    Street = placeViewModel.Street,
+                    NumberOfGarages = placeViewModel.NumberOfGarages,
                     IsDeleted = placeViewModel.IsDeleted
                 };
                 var saveSuccessful = await placeService.Update(model);
@@ -117,7 +105,10 @@ namespace CarsUI.Controllers
                     {
                         Id = x.Id,
                         NamePlace = x.NamePlace,
-                       
+                        Country = placeViewModel.Country,
+                        City = placeViewModel.City,
+                        Street = placeViewModel.Street,
+                        NumberOfGarages = placeViewModel.NumberOfGarages,
                         IsDeleted = x.IsDeleted
                     }).ToList();
 
@@ -163,7 +154,10 @@ namespace CarsUI.Controllers
             var resultList = (await placeService.GetAll()).Select(x => new PlaceViewModel
             {
                 NamePlace = x.NamePlace,
-                
+                Country = x.Country,
+                City = x.City,
+                Street = x.Street,
+                NumberOfGarages = x.NumberOfGarages,
                 IsDeleted = x.IsDeleted
             }).ToList();
 
