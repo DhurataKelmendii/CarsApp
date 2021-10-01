@@ -1,6 +1,5 @@
 ﻿using Cars.Domain.Entities;
 using Cars.Persistence.Repositories;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,51 +10,42 @@ namespace Cars.Persistence.CarsRepositories
 {
     public class PlaceRepository
     {
-        #region Properties
-
+        //private readonly GarageRepository _garageRepository = new GarageRepository();
         private readonly IRepository<Place> _placeRepository;
 
-        public PlaceRepository(IRepository<Place> repository)
+        private readonly CarsDbContext _dbContext;
+
+
+        public PlaceRepository(IRepository<Place> repository,
+            CarsDbContext dbContext
+            )
         {
             _placeRepository = repository;
 
+            _dbContext = dbContext;
         }
-        #endregion
-
-        #region Actions
-
-        public async Task<bool> Create(Place model)
+        public async Task<bool> Create(Place place)
         {
-            await _placeRepository.Create(model);
+            await _placeRepository.Create(place);
 
-            var savedSuccessful = await _placeRepository.SaveChangesAsync();
+            var savedSuccesfully = await _placeRepository.SaveChangesAsync();
 
-            return savedSuccessful;
+            return savedSuccesfully;
+
         }
 
-        public async Task<IList<Place>> GetAll()
+        public async Task<bool> Update(Place place)
         {
-            var result = (await _placeRepository.GetAll()).Where(x => x.IsDeleted == false).ToList();
-            return result;
-        }
+            _placeRepository.Update(place);
 
-
-        public async Task<Place> GetById(int id)
-        {
-            var Place = await _placeRepository.GetById(id);
-            return Place;
-        }
-
-        public async Task<bool> Update(Place model)
-        {
-            _placeRepository.Update(model);
             var updatedSuccesful = await _placeRepository.SaveChangesAsync();
             return updatedSuccesful;
         }
 
-        public void Delete(Place model)
+        public async Task<Place> GetById(int id)
         {
-            _placeRepository.Delete(model);
+            var result = await _placeRepository.GetById(id);
+            return result;
 
         }
 
@@ -66,6 +56,14 @@ namespace Cars.Persistence.CarsRepositories
             var deletedSuccesful = await _placeRepository.SaveChangesAsync();
             return deletedSuccesful;
         }
-        #endregion
+
+        public async Task<IList<Place>> GetAll()
+        {
+            var result = (await _placeRepository.GetAll()).Where(x => x.IsDeleted == false).ToList();
+            return result;
+        }
+
     }
+
 }
+

@@ -1,6 +1,5 @@
 ﻿using Cars.Domain.Entities;
 using Cars.Persistence.Repositories;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,51 +10,42 @@ namespace Cars.Persistence.CarsRepositories
 {
     public class EmployeeRepository
     {
-        #region Properties
-
+        //private readonly GarageRepository _garageRepository = new GarageRepository();
         private readonly IRepository<Employee> _employeeRepository;
+        
+        private readonly CarsDbContext _dbContext;
 
-        public EmployeeRepository(IRepository<Employee> repository)
+
+        public EmployeeRepository(IRepository<Employee> repository,
+            CarsDbContext dbContext
+            )
         {
             _employeeRepository = repository;
+           
+            _dbContext = dbContext;
+        }
+        public async Task<bool> Create(Employee employee)
+        {
+            await _employeeRepository.Create(employee);
+
+            var savedSuccesfully = await _employeeRepository.SaveChangesAsync();
+
+            return savedSuccesfully;
 
         }
-        #endregion
 
-        #region Actions
-
-        public async Task<bool> Create(Employee model)
+        public async Task<bool> Update(Employee employee)
         {
-            await _employeeRepository.Create(model);
+            _employeeRepository.Update(employee);
 
-            var savedSuccessful = await _employeeRepository.SaveChangesAsync();
-
-            return savedSuccessful;
-        }
-
-        public async Task<IList<Employee>> GetAll()
-        {
-            var result = (await _employeeRepository.GetAll()).Where(x => x.IsDeleted == false).ToList();
-            return result;
-        }
-
-
-        public async Task<Employee> GetById(int id)
-        {
-            var employee = await _employeeRepository.GetById(id);
-            return employee;
-        }
-
-        public async Task<bool> Update(Employee model)
-        {
-            _employeeRepository.Update(model);
             var updatedSuccesful = await _employeeRepository.SaveChangesAsync();
             return updatedSuccesful;
         }
 
-        public void Delete(Employee model)
+        public async Task<Employee> GetById(int id)
         {
-            _employeeRepository.Delete(model);
+            var result = await _employeeRepository.GetById(id);
+            return result;
 
         }
 
@@ -66,6 +56,14 @@ namespace Cars.Persistence.CarsRepositories
             var deletedSuccesful = await _employeeRepository.SaveChangesAsync();
             return deletedSuccesful;
         }
-        #endregion
+
+        public async Task<IList<Employee>> GetAll()
+        {
+            var result = (await _employeeRepository.GetAll()).Where(x => x.IsDeleted == false).ToList();
+            return result;
+        }
+        
     }
+
 }
+

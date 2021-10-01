@@ -1,4 +1,5 @@
 ﻿using Cars.Domain.Entities;
+using Cars.Persistence;
 using Cars.Persistence.CarsRepositories;
 using Cars.Persistence.Repositories;
 using System;
@@ -11,12 +12,11 @@ namespace Cars.Service.CarsServices
 {
     public class EmployeeService
     {
-
         private readonly EmployeeRepository _employeeRepository;
 
-        public EmployeeService(IRepository<Employee> repository)
+        public EmployeeService(IRepository<Employee> repository, CarsDbContext context)
         {
-            _employeeRepository = new EmployeeRepository(repository);
+            _employeeRepository = new EmployeeRepository(repository,context);
 
         }
 
@@ -56,5 +56,8 @@ namespace Cars.Service.CarsServices
             var deleted = await _employeeRepository.DeleteEmployee(id);
             return deleted;
         }
+
+
     }
 }
+
