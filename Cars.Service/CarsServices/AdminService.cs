@@ -1,4 +1,5 @@
 ﻿using Cars.Domain.Entities;
+using Cars.Persistence;
 using Cars.Persistence.CarsRepositories;
 using Cars.Persistence.Repositories;
 using System;
@@ -7,16 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Admins.Service.CarsServices
+namespace Cars.Service.CarsServices
 {
     public class AdminService
     {
-
         private readonly AdminRepository _adminRepository;
 
-        public AdminService(IRepository<Admin> repository)
+        public AdminService(IRepository<Admin> repository, CarsDbContext context)
         {
-            _adminRepository = new AdminRepository(repository);
+            _adminRepository = new AdminRepository(repository, context);
 
         }
 
@@ -56,5 +56,8 @@ namespace Admins.Service.CarsServices
             var deleted = await _adminRepository.DeleteAdmin(id);
             return deleted;
         }
+
+
     }
 }
+

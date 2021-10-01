@@ -1,4 +1,5 @@
 ﻿using Cars.Domain.Entities;
+using Cars.Persistence;
 using Cars.Persistence.CarsRepositories;
 using Cars.Persistence.Repositories;
 using System;
@@ -7,18 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cars.Service.RolesServices
+namespace Cars.Service.CarsServices
 {
     public class RolesService
     {
-
         private readonly RolesRepository _rolesRepository;
-        //private readonly IRepository<Roles> _repository;
 
-
-        public RolesService(IRepository<Roles> repository)
+        public RolesService(IRepository<Roles> repository, CarsDbContext context)
         {
-            _rolesRepository = new RolesRepository(repository);
+            _rolesRepository = new RolesRepository(repository, context);
 
         }
 
@@ -37,14 +35,6 @@ namespace Cars.Service.RolesServices
             return updatedSuccefully;
         }
 
-        //public async Task<bool> Delete(Roles Roles)
-        //{
-        //    _RolesRepository.Delete(Roles);
-
-        //    var deleted = await _repository.SaveChangesAsync();
-
-        //    return deleted;
-        //}
 
         public async Task<IList<Roles>> GetAll()
         {
@@ -66,5 +56,8 @@ namespace Cars.Service.RolesServices
             var deleted = await _rolesRepository.DeleteRoles(id);
             return deleted;
         }
+
+
     }
 }
+

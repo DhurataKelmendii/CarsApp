@@ -1,6 +1,5 @@
 ﻿using Cars.Domain.Entities;
 using Cars.Persistence.Repositories;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,51 +10,42 @@ namespace Cars.Persistence.CarsRepositories
 {
     public class RolesRepository
     {
-        #region Properties
-
+        //private readonly GarageRepository _garageRepository = new GarageRepository();
         private readonly IRepository<Roles> _rolesRepository;
 
-        public RolesRepository(IRepository<Roles> repository)
+        private readonly CarsDbContext _dbContext;
+
+
+        public RolesRepository(IRepository<Roles> repository,
+            CarsDbContext dbContext
+            )
         {
             _rolesRepository = repository;
 
+            _dbContext = dbContext;
         }
-        #endregion
-
-        #region Actions
-
-        public async Task<bool> Create(Roles model)
+        public async Task<bool> Create(Roles roles)
         {
-            await _rolesRepository.Create(model);
+            await _rolesRepository.Create(roles);
 
-            var savedSuccessful = await _rolesRepository.SaveChangesAsync();
+            var savedSuccesfully = await _rolesRepository.SaveChangesAsync();
 
-            return savedSuccessful;
+            return savedSuccesfully;
+
         }
 
-        public async Task<IList<Roles>> GetAll()
+        public async Task<bool> Update(Roles roles)
         {
-            var result = (await _rolesRepository.GetAll()).Where(x => x.IsDeleted == false).ToList();
-            return result;
-        }
+            _rolesRepository.Update(roles);
 
-
-        public async Task<Roles> GetById(int id)
-        {
-            var user = await _rolesRepository.GetById(id);
-            return user;
-        }
-
-        public async Task<bool> Update(Roles model)
-        {
-            _rolesRepository.Update(model);
             var updatedSuccesful = await _rolesRepository.SaveChangesAsync();
             return updatedSuccesful;
         }
 
-        public void Delete(Roles model)
+        public async Task<Roles> GetById(int id)
         {
-            _rolesRepository.Delete(model);
+            var result = await _rolesRepository.GetById(id);
+            return result;
 
         }
 
@@ -66,6 +56,14 @@ namespace Cars.Persistence.CarsRepositories
             var deletedSuccesful = await _rolesRepository.SaveChangesAsync();
             return deletedSuccesful;
         }
-        #endregion
+
+        public async Task<IList<Roles>> GetAll()
+        {
+            var result = (await _rolesRepository.GetAll()).Where(x => x.IsDeleted == false).ToList();
+            return result;
+        }
+
     }
+
 }
+

@@ -1,4 +1,5 @@
 ﻿using Cars.Domain.Entities;
+using Cars.Persistence;
 using Cars.Persistence.CarsRepositories;
 using Cars.Persistence.Repositories;
 using System;
@@ -7,18 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Places.Service.CarsServices
+namespace Cars.Service.CarsServices
 {
     public class PlaceService
     {
-
         private readonly PlaceRepository _placeRepository;
-        //private readonly IRepository<Place> _repository;
 
-
-        public PlaceService(IRepository<Place> repository)
+        public PlaceService(IRepository<Place> repository, CarsDbContext context)
         {
-            _placeRepository = new PlaceRepository(repository);
+            _placeRepository = new PlaceRepository(repository, context);
 
         }
 
@@ -37,14 +35,6 @@ namespace Places.Service.CarsServices
             return updatedSuccefully;
         }
 
-        //public async Task<bool> Delete(Place Place)
-        //{
-        //    _PlaceRepository.Delete(Place);
-
-        //    var deleted = await _repository.SaveChangesAsync();
-
-        //    return deleted;
-        //}
 
         public async Task<IList<Place>> GetAll()
         {
@@ -66,5 +56,8 @@ namespace Places.Service.CarsServices
             var deleted = await _placeRepository.DeletePlace(id);
             return deleted;
         }
+
+
     }
 }
+

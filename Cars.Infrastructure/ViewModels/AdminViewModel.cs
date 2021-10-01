@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cars.Domain.Entities
+
+namespace Cars.Infrastructure.ViewModels
 {
     public class AdminViewModel
     {
@@ -13,6 +14,7 @@ namespace Cars.Domain.Entities
         public string Gender { get; set; }
         public string Email { get; set; }
         public bool IsDeleted { get; set; }
+        public List<AdminViewModel> Admins { get; set; }
 
     }
 }
