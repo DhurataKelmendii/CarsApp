@@ -1,4 +1,5 @@
 ﻿using Cars.Domain.Entities;
+using Cars.Persistence;
 using Cars.Persistence.CarsRepositories;
 using Cars.Persistence.Repositories;
 using System;
@@ -9,12 +10,11 @@ using System.Threading.Tasks;
 
 namespace Cars.Service.CarsServices
 {
-   public class BusGarageServices
+    public class BusGarageService
     {
         private readonly BusGarageRepository _busGarageRepository;
 
-
-        public BusGarageServices(IRepository<BusGarage> repository)
+        public BusGarageService(IRepository<BusGarage> repository)
         {
             _busGarageRepository = new BusGarageRepository(repository);
 
@@ -34,6 +34,7 @@ namespace Cars.Service.CarsServices
 
             return updatedSuccefully;
         }
+
 
         public async Task<IList<BusGarage>> GetAll()
         {
@@ -55,6 +56,8 @@ namespace Cars.Service.CarsServices
             var deleted = await _busGarageRepository.DeleteBusGarage(id);
             return deleted;
         }
-    }
 
+
+    }
 }
+

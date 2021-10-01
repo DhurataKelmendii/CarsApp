@@ -8,53 +8,45 @@ using System.Threading.Tasks;
 
 namespace Cars.Persistence.CarsRepositories
 {
-   public class BusGarageRepository
+    public class BusGarageRepository
     {
-        #region Properties
-
+        //private readonly BusGarageRepository _busGarageRepository = new BusGarageRepository();
         private readonly IRepository<BusGarage> _busGarageRepository;
+        
 
-        public BusGarageRepository(IRepository<BusGarage> repository)
+        public BusGarageRepository(IRepository<BusGarage> repository
+            
+            )
         {
             _busGarageRepository = repository;
 
-        }
-        #endregion
 
-        #region Actions
-
-        public async Task<bool> Create(BusGarage model)
-        {
-            await _busGarageRepository.Create(model);
-
-            var savedSuccessful = await _busGarageRepository.SaveChangesAsync();
-
-            return savedSuccessful;
-        }
-
-        public async Task<IList<BusGarage>> GetAll()
-        {
-            var result = (await _busGarageRepository.GetAll()).Where(x => x.IsDeleted == false).ToList();
-            return result;
+            
         }
 
 
-        public async Task<BusGarage> GetById(int id)
+        public async Task<bool> Create(BusGarage busGarage)
         {
-            var user = await _busGarageRepository.GetById(id);
-            return user;
+            await _busGarageRepository.Create(busGarage);
+
+            var savedSuccesfully = await _busGarageRepository.SaveChangesAsync();
+
+            return savedSuccesfully;
+
         }
 
-        public async Task<bool> Update(BusGarage model)
+        public async Task<bool> Update(BusGarage busGarage)
         {
-            _busGarageRepository.Update(model);
+            _busGarageRepository.Update(busGarage);
+
             var updatedSuccesful = await _busGarageRepository.SaveChangesAsync();
             return updatedSuccesful;
         }
 
-        public void Delete(BusGarage model)
+        public async Task<BusGarage> GetById(int id)
         {
-            _busGarageRepository.Delete(model);
+            var result = await _busGarageRepository.GetById(id);
+            return result;
 
         }
 
@@ -65,6 +57,18 @@ namespace Cars.Persistence.CarsRepositories
             var deletedSuccesful = await _busGarageRepository.SaveChangesAsync();
             return deletedSuccesful;
         }
-        #endregion
+
+        public async Task<IList<BusGarage>> GetAll()
+        {
+            var result = (await _busGarageRepository.GetAll()).Where(x => x.IsDeleted == false).ToList();
+            return result;
+        }
+
+
+
+        // Cars in BusGarage
+
     }
+
 }
+
