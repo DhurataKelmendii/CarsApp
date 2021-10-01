@@ -93,6 +93,22 @@ namespace CarsUI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("UsersList")]
+        public async Task<IActionResult> UsersList()
+        {
+            var model = new ApplicationUserViewModel();
+            var result = (await userService.GetAll()).Select(x => new ApplicationUserViewModel
+            {
+                Email = x.Email,
+         
+              
+            }).ToList();
+
+            model.Users = result;
+            return Ok(model);
+        }
+
 
         [HttpPost]
         [Route("AddNewUser")]

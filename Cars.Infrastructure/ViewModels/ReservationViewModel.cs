@@ -16,7 +16,7 @@ namespace Cars.Infrastructure.ViewModels
 		public string GarageName { get; set; }
 		public int CarsUsing { get; set; }
 		public bool IsDeleted { get; set; }
-
 		public List<ReservationViewModel> Reservations { get; set; }
+
 	}
 }

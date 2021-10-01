@@ -13,6 +13,7 @@ namespace Cars.Infrastructure.ViewModels
         public string Address { get; set; }
         public string City { get; set; }
         public string PhoneNumber { get; set; }
-       
+        public List<ApplicationUserViewModel> Users { get; set; }
+
     }
 }
